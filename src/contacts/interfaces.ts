@@ -10,6 +10,7 @@ export interface Contact {
 }
 
 export interface CreateContactOptions {
+  id: string;
   email: string;
   firstName: string;
   lastName: string;

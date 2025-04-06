@@ -3,7 +3,7 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const baseUrl = "http://localhost:3000"; // For local development
+const baseUrl = "http://localhost:3000"; // Good for now we test locally
 
 export class Theta {
   private readonly headers: Headers;
@@ -14,7 +14,7 @@ export class Theta {
   constructor(readonly key: string) {
     if (!key) {
       throw new Error(
-        'Missing API key. Pass it to the constructor `new Theta("th_123")`',
+        'Missing API key. Pass it to the constructor `new Theta("th_123")`'
       );
     }
 
@@ -26,7 +26,7 @@ export class Theta {
 
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
     const { data: response, error: fetchError } = await tryCatch(
-      fetch(`${baseUrl}${path}`, options),
+      fetch(`${baseUrl}${path}`, options)
     );
 
     if (fetchError || !response) {
@@ -40,7 +40,10 @@ export class Theta {
     }
 
     if (response.ok) {
-      const { data, error: parseError } = await tryCatch(response.json());
+      const { data, error: parseError } = await tryCatch<T>(
+        response.json() as Promise<T>
+      );
+
       if (parseError) {
         return {
           data: null,
@@ -54,7 +57,7 @@ export class Theta {
     }
 
     const { data: errorText, error: textError } = await tryCatch(
-      response.text(),
+      response.text()
     );
     if (textError || !errorText) {
       return {
@@ -67,7 +70,7 @@ export class Theta {
     }
 
     const { data: parsedError, error: parseError } = await tryCatch(
-      Promise.resolve(JSON.parse(errorText)),
+      Promise.resolve(JSON.parse(errorText))
     );
 
     if (parseError || !parsedError) {
@@ -87,7 +90,7 @@ export class Theta {
   async post<T>(
     path: string,
     entity?: unknown,
-    options: PostOptions = {},
+    options: PostOptions = {}
   ): Promise<ApiResponse<T>> {
     const requestOptions = {
       method: "POST",
@@ -102,7 +105,7 @@ export class Theta {
   async patch<T>(
     path: string,
     entity: unknown,
-    options: PatchOptions = {},
+    options: PatchOptions = {}
   ): Promise<ApiResponse<T>> {
     const requestOptions = {
       method: "PATCH",
