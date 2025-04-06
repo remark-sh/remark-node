@@ -1,6 +1,6 @@
 {
   "name": "@theta-sdk/node",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Node.js library for the Theta API",
   "publishConfig": {
     "access": "public"
