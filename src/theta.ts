@@ -5,12 +5,25 @@ import { Feedbacks } from "@/feedbacks";
 
 const baseUrl = "http://localhost:3000/api"; // Good for now we test locally
 
+/**
+ * The main Theta SDK class. Initialize with your API key to start making requests.
+ *
+ * @example
+ * ```ts
+ * const theta = new Theta("your_api_key");
+ * ```
+ */
 export class Theta {
   private readonly headers: Headers;
 
   readonly contacts = new Contacts(this);
   readonly feedbacks = new Feedbacks(this);
 
+  /**
+   * Creates a new instance of the Theta SDK.
+   * @param key - Your Theta API key
+   * @throws {Error} If no API key is provided
+   */
   constructor(readonly key: string) {
     if (!key) {
       throw new Error(
@@ -24,6 +37,12 @@ export class Theta {
     });
   }
 
+  /**
+   * Makes a generic fetch request to the Theta API.
+   * @param path - The API endpoint path
+   * @param options - Optional fetch request options
+   * @returns A promise that resolves to an API response with data or error
+   */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
     const { data: response, error: fetchError } = await tryCatch(
       fetch(`${baseUrl}${path}`, options)
@@ -87,6 +106,13 @@ export class Theta {
     return { data: null, error: parsedError };
   }
 
+  /**
+   * Makes a POST request to the Theta API.
+   * @param path - The API endpoint path
+   * @param entity - The data to send in the request body
+   * @param options - Additional fetch options
+   * @returns A promise that resolves to an API response with data or error
+   */
   async post<T>(
     path: string,
     entity?: unknown,
@@ -102,6 +128,13 @@ export class Theta {
     return this.fetchRequest<T>(path, requestOptions);
   }
 
+  /**
+   * Makes a PATCH request to the Theta API.
+   * @param path - The API endpoint path
+   * @param entity - The data to send in the request body
+   * @param options - Additional fetch options
+   * @returns A promise that resolves to an API response with data or error
+   */
   async patch<T>(
     path: string,
     entity: unknown,
@@ -117,6 +150,12 @@ export class Theta {
     return this.fetchRequest<T>(path, requestOptions);
   }
 
+  /**
+   * Makes a DELETE request to the Theta API.
+   * @param path - The API endpoint path
+   * @param query - Optional query parameters to send in the request body
+   * @returns A promise that resolves to an API response with data or error
+   */
   async delete<T>(path: string, query?: unknown): Promise<ApiResponse<T>> {
     const requestOptions = {
       method: "DELETE",
