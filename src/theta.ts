@@ -3,7 +3,7 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const baseUrl = "http://localhost:3000"; // Good for now we test locally
+const baseUrl = "http://localhost:3000/api"; // Good for now we test locally
 
 export class Theta {
   private readonly headers: Headers;
