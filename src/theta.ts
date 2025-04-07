@@ -26,7 +26,7 @@ export class Theta {
   constructor(readonly key: string) {
     if (!key) {
       throw new Error(
-        'Missing API key. Pass it to the constructor `new Theta("th_123")`'
+        "Missing API key. Please define it in your .env file as THETA_API_KEY."
       );
     }
 
