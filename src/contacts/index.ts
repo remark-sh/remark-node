@@ -1,36 +1,34 @@
 import {
-  Contact,
+  ContactFields,
+  ContactResponse,
   CreateContactOptions,
-  CreateContactResponse,
-  DeleteContactResponse,
+  DeleteContactOptions,
   UpdateContactOptions,
-  UpdateContactResponse,
 } from "@/contacts/interfaces";
 import { Theta } from "@/theta";
 
-/**
- * Contact management for the Theta API.
- */
 export class Contacts {
   constructor(private readonly theta: Theta) {}
 
   /**
-   * Creates a new contact with the given ID.
-   * @throws {Error} If contact already exists or request fails
+   * Creates a new contact.
+   * @throws {Error} If the API request fails
    * @example
    * ```ts
    * const { data: contact } = await theta.contacts.create({
-   *   id: "user123",
-   *   email: "user@example.com"
+   *   email: "alan@turing.com",
+   *   firstName: "Alan",
+   *   lastName: "Turing",
+   *
    * });
    * ```
    */
-  async create(options: CreateContactOptions): Promise<CreateContactResponse> {
-    const response = await this.theta.post<Contact>(`/contacts/${options.id}`, {
+  async create(options: CreateContactOptions): Promise<ContactResponse> {
+    const response = await this.theta.post<ContactFields>(`/contacts`, {
       email: options.email,
       firstName: options.firstName,
       lastName: options.lastName,
-      subscribed: options.subscribed ?? false,
+      subscribed: options.subscribed,
     });
 
     if (response.error) {
@@ -45,25 +43,24 @@ export class Contacts {
 
   /**
    * Updates an existing contact.
-   * @throws {Error} If contact not found or request fails
+   * @throws {Error} If the API request fails
    * @example
    * ```ts
    * const { data: contact } = await theta.contacts.update({
-   *   id: "user123",
-   *   email: "new@example.com"
+   *   email: "alan@turing.com",
+   *   firstName: "Alan",
+   *   lastName: "Turing",
+   *   subscribed: false
    * });
    * ```
    */
-  async update(options: UpdateContactOptions): Promise<UpdateContactResponse> {
-    const response = await this.theta.patch<Contact>(
-      `/contacts/${options.id}`,
-      {
-        email: options.email,
-        firstName: options.firstName,
-        lastName: options.lastName,
-        subscribed: options.subscribed,
-      }
-    );
+  async update(options: UpdateContactOptions): Promise<ContactResponse> {
+    const response = await this.theta.patch<ContactFields>(`/contacts`, {
+      email: options.email,
+      firstName: options.firstName,
+      lastName: options.lastName,
+      subscribed: options.subscribed,
+    });
 
     if (response.error) {
       throw new Error(response.error.message);
@@ -76,15 +73,19 @@ export class Contacts {
   }
 
   /**
-   * Deletes a contact by ID.
-   * @throws {Error} If contact not found or request fails
+   * Deletes a contact.
+   * @throws {Error} If the API request fails
    * @example
    * ```ts
-   * const { data: contact } = await theta.contacts.delete("user123");
+   * const { data: contact } = await theta.contacts.delete({
+   *   email: "alan@turing.com"
+   * });
    * ```
    */
-  async delete(id: string): Promise<DeleteContactResponse> {
-    const response = await this.theta.delete<Contact>(`/contacts/${id}`);
+  async delete(options: DeleteContactOptions): Promise<ContactResponse> {
+    const response = await this.theta.delete<ContactFields>(`/contacts`, {
+      email: options.email,
+    });
 
     if (response.error) {
       throw new Error(response.error.message);

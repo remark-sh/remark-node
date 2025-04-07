@@ -1,20 +1,19 @@
-export interface Feedback {
-  id: string;
+export interface FeedbackFields {
+  /**
+   * Sender email address.
+   * @required
+   */
   from: string;
-  where?: string;
-  message: string;
-  createdAt: Date;
-  updatedAt: Date;
+  /**
+   * The plain text version of the message.
+   * @required
+   */
+  text: string;
 }
 
-export interface CreateFeedbackOptions {
-  id: string;
-  from: string;
-  where?: string;
-  message: string;
-}
+export interface CreateFeedbackOptions extends FeedbackFields {}
 
 export interface CreateFeedbackResponse {
-  data: Feedback | null;
+  data: FeedbackFields | null;
   error: { name: string; message: string } | null;
 }

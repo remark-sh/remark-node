@@ -1,40 +1,34 @@
-export interface Contact {
-  id: string;
+export interface ContactFields {
+  /**
+   * The email address of the contact.
+   * @required
+   */
   email: string;
-  firstName: string;
-  lastName: string;
-  subscribed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface CreateContactOptions {
-  id: string;
-  email: string;
+  /**
+   * The first name of the contact.
+   * @optional
+   */
   firstName?: string;
+  /**
+   * The last name of the contact.
+   * @optional
+   */
   lastName?: string;
+  /**
+   * Whether the contact is a paid user.
+   * @optional
+   */
   subscribed?: boolean;
 }
 
-export interface CreateContactResponse {
-  data: Contact | null;
+export interface CreateContactOptions extends ContactFields {}
+export interface UpdateContactOptions extends ContactFields {}
+
+export interface ContactResponse {
+  data: ContactFields | null;
   error: { name: string; message: string } | null;
 }
 
-export interface UpdateContactOptions {
-  id: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  subscribed?: boolean;
-}
-
-export interface UpdateContactResponse {
-  data: Contact | null;
-  error: { name: string; message: string } | null;
-}
-
-export interface DeleteContactResponse {
-  data: Contact | null;
-  error: { name: string; message: string } | null;
+export interface DeleteContactOptions {
+  email: string;
 }

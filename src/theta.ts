@@ -21,7 +21,6 @@ export class Theta {
 
   /**
    * Creates a new instance of the Theta SDK.
-   * @param key - Your Theta API key
    * @throws {Error} If no API key is provided
    */
   constructor(readonly key: string) {
@@ -39,9 +38,7 @@ export class Theta {
 
   /**
    * Makes a generic fetch request to the Theta API.
-   * @param path - The API endpoint path
-   * @param options - Optional fetch request options
-   * @returns A promise that resolves to an API response with data or error
+   * @throws {Error} If the API request fails
    */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
     const { data: response, error: fetchError } = await tryCatch(
@@ -108,10 +105,7 @@ export class Theta {
 
   /**
    * Makes a POST request to the Theta API.
-   * @param path - The API endpoint path
-   * @param entity - The data to send in the request body
-   * @param options - Additional fetch options
-   * @returns A promise that resolves to an API response with data or error
+   * @throws {Error} If the API request fails
    */
   async post<T>(
     path: string,
@@ -130,10 +124,7 @@ export class Theta {
 
   /**
    * Makes a PATCH request to the Theta API.
-   * @param path - The API endpoint path
-   * @param entity - The data to send in the request body
-   * @param options - Additional fetch options
-   * @returns A promise that resolves to an API response with data or error
+   * @throws {Error} If the API request fails
    */
   async patch<T>(
     path: string,
@@ -152,9 +143,7 @@ export class Theta {
 
   /**
    * Makes a DELETE request to the Theta API.
-   * @param path - The API endpoint path
-   * @param query - Optional query parameters to send in the request body
-   * @returns A promise that resolves to an API response with data or error
+   * @throws {Error} If the API request fails
    */
   async delete<T>(path: string, query?: unknown): Promise<ApiResponse<T>> {
     const requestOptions = {
