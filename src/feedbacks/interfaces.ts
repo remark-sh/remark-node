@@ -8,6 +8,7 @@ export interface Feedback {
 }
 
 export interface CreateFeedbackOptions {
+  id: string;
   from: string;
   where?: string;
   message: string;
