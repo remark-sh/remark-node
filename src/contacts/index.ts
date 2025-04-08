@@ -5,26 +5,25 @@ import {
   DeleteContactOptions,
   UpdateContactOptions,
 } from "@/contacts/interfaces";
-import { Theta } from "@/theta";
+import { Remark } from "@/remark";
 
 export class Contacts {
-  constructor(private readonly theta: Theta) {}
+  constructor(private readonly remark: Remark) {}
 
   /**
    * Creates a new contact.
    * @throws {Error} If the API request fails
    * @example
    * ```ts
-   * const { data: contact } = await theta.contacts.create({
+   * const { data: contact } = await remark.contacts.create({
    *   email: "alan@turing.com",
-   *   firstName: "Alan",
    *   lastName: "Turing",
-   *
+   *   firstName: "Alan",
    * });
    * ```
    */
   async create(options: CreateContactOptions): Promise<ContactResponse> {
-    const response = await this.theta.post<ContactFields>(`/contacts`, {
+    const response = await this.remark.post<ContactFields>(`/contacts`, {
       email: options.email,
       firstName: options.firstName,
       lastName: options.lastName,
@@ -46,16 +45,16 @@ export class Contacts {
    * @throws {Error} If the API request fails
    * @example
    * ```ts
-   * const { data: contact } = await theta.contacts.update({
+   * const { data: contact } = await remark.contacts.update({
    *   email: "alan@turing.com",
-   *   firstName: "Alan",
    *   lastName: "Turing",
+   *   firstName: "Alan",
    *   subscribed: false
    * });
    * ```
    */
   async update(options: UpdateContactOptions): Promise<ContactResponse> {
-    const response = await this.theta.patch<ContactFields>(`/contacts`, {
+    const response = await this.remark.patch<ContactFields>(`/contacts`, {
       email: options.email,
       firstName: options.firstName,
       lastName: options.lastName,
@@ -77,13 +76,13 @@ export class Contacts {
    * @throws {Error} If the API request fails
    * @example
    * ```ts
-   * const { data: contact } = await theta.contacts.delete({
+   * const { data: contact } = await remark.contacts.delete({
    *   email: "alan@turing.com"
    * });
    * ```
    */
   async delete(options: DeleteContactOptions): Promise<ContactResponse> {
-    const response = await this.theta.delete<ContactFields>(`/contacts`, {
+    const response = await this.remark.delete<ContactFields>(`/contacts`, {
       email: options.email,
     });
 

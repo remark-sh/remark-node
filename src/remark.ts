@@ -6,27 +6,27 @@ import { Feedbacks } from "@/feedbacks";
 const baseUrl = "http://localhost:3000/api"; // Good for now we test locally
 
 /**
- * The main Theta SDK class. Initialize with your API key to start making requests.
+ * The main Remark SDK class. Initialize with your API key to start making requests.
  *
  * @example
  * ```ts
- * const theta = new Theta("your_api_key");
+ * const remark = new Remark("your_api_key");
  * ```
  */
-export class Theta {
+export class Remark {
   private readonly headers: Headers;
 
   readonly contacts = new Contacts(this);
   readonly feedbacks = new Feedbacks(this);
 
   /**
-   * Creates a new instance of the Theta SDK.
+   * Creates a new instance of the Remark SDK.
    * @throws {Error} If no API key is provided
    */
   constructor(readonly key: string) {
     if (!key) {
       throw new Error(
-        "Missing API key. Please define it in your .env file as THETA_API_KEY."
+        "Missing API key. Please define it in your .env file as REMARK_API_KEY."
       );
     }
 
@@ -37,7 +37,7 @@ export class Theta {
   }
 
   /**
-   * Makes a generic fetch request to the Theta API.
+   * Makes a generic fetch request to the Remark API.
    * @throws {Error} If the API request fails
    */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
@@ -104,7 +104,7 @@ export class Theta {
   }
 
   /**
-   * Makes a POST request to the Theta API.
+   * Makes a POST request to the Remark API.
    * @throws {Error} If the API request fails
    */
   async post<T>(
@@ -123,7 +123,7 @@ export class Theta {
   }
 
   /**
-   * Makes a PATCH request to the Theta API.
+   * Makes a PATCH request to the Remark API.
    * @throws {Error} If the API request fails
    */
   async patch<T>(
@@ -142,7 +142,7 @@ export class Theta {
   }
 
   /**
-   * Makes a DELETE request to the Theta API.
+   * Makes a DELETE request to the Remark API.
    * @throws {Error} If the API request fails
    */
   async delete<T>(path: string, query?: unknown): Promise<ApiResponse<T>> {

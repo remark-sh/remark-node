@@ -1,7 +1,7 @@
 {
-  "name": "@theta-sdk/node",
+  "name": "@remark-sdk/node",
   "version": "0.2.1",
-  "description": "Node.js library for the Theta API",
+  "description": "Node.js library for the Remark API",
   "publishConfig": {
     "access": "public"
   },
@@ -32,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theta-sdk/theta-node.git"
+    "url": "git+https://github.com/remark-sdk/remark-node.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/theta-sdk/theta-node/issues"
+    "url": "https://github.com/remark-sdk/remark-node/issues"
   },
-  "homepage": "https://github.com/theta-sdk/theta-node#readme",
+  "homepage": "https://github.com/remark-sdk/remark-node#readme",
   "devDependencies": {
     "@types/node": "18.19.80",
     "tsup": "7.2.0",

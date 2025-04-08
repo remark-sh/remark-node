@@ -3,17 +3,17 @@ import {
   CreateFeedbackResponse,
   FeedbackFields,
 } from "@/feedbacks/interfaces";
-import { Theta } from "@/theta";
+import { Remark } from "@/remark";
 
 export class Feedbacks {
-  constructor(private readonly theta: Theta) {}
+  constructor(private readonly remark: Remark) {}
 
   /**
    * Creates a new feedback.
    * @throws {Error} If the API request fails
    * @example
    * ```ts
-   * const { data: feedback } = await theta.feedbacks.create({
+   * const { data: feedback } = await remark.feedbacks.create({
    *   from: "alan@turing.com",
    *   message: "Great product!"
    * });
@@ -22,7 +22,7 @@ export class Feedbacks {
   async create(
     options: CreateFeedbackOptions
   ): Promise<CreateFeedbackResponse> {
-    const response = await this.theta.post<FeedbackFields>(`/feedbacks`, {
+    const response = await this.remark.post<FeedbackFields>(`/feedbacks`, {
       from: options.from,
       text: options.text,
     });
