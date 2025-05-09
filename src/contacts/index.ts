@@ -8,7 +8,7 @@ import {
 import { Remark } from "@/remark";
 
 export class Contacts {
-  constructor(private readonly remark: Remark) {}
+  constructor(private readonly remark: Remark) { }
 
   /**
    * Creates a new contact.
@@ -27,7 +27,6 @@ export class Contacts {
       email: options.email,
       firstName: options.firstName,
       lastName: options.lastName,
-      subscribed: options.subscribed,
     });
 
     if (response.error) {
@@ -48,8 +47,7 @@ export class Contacts {
    * const { data: contact } = await remark.contacts.update({
    *   email: "alan@turing.com",
    *   lastName: "Turing",
-   *   firstName: "Alan",
-   *   subscribed: false
+   *   firstName: "Alan"
    * });
    * ```
    */
@@ -58,7 +56,6 @@ export class Contacts {
       email: options.email,
       firstName: options.firstName,
       lastName: options.lastName,
-      subscribed: options.subscribed,
     });
 
     if (response.error) {

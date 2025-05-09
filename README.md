@@ -14,7 +14,7 @@ First, you need to get an API key, which is available in the Remark dashboard.
 
 ```ts
 import { Remark } from "remark";
-const remark = new Remark("th_123456789");
+const remark = new Remark("...");
 ```
 
 ## Usage

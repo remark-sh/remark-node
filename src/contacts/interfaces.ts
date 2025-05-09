@@ -14,15 +14,10 @@ export interface ContactFields {
    * @optional
    */
   lastName?: string;
-  /**
-   * Whether the contact is a paid user.
-   * @optional
-   */
-  subscribed?: boolean;
 }
 
-export interface CreateContactOptions extends ContactFields {}
-export interface UpdateContactOptions extends ContactFields {}
+export interface CreateContactOptions extends ContactFields { }
+export interface UpdateContactOptions extends ContactFields { }
 
 export interface ContactResponse {
   data: ContactFields | null;
