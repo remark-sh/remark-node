@@ -23,8 +23,9 @@ export class Contacts {
    */
   async create(options: CreateContactOptions): Promise<ContactResponse> {
     const response = await this.remark.post<ContactFields>(`/contacts`, {
-      email: options.email,
       name: options.name,
+      email: options.email,
+      metadata: options.metadata,
     });
 
     if (response.error) {
@@ -44,7 +45,10 @@ export class Contacts {
    * ```ts
    * const { data: contact } = await remark.contacts.update({
    *   email: "alan@turing.com",
-   *   name: "Alan Turing"
+   *   name: "Alan Turing",
+   *   metadata: {
+   *     tier: "premium"
+   *   }
    * });
    * ```
    */
@@ -52,6 +56,7 @@ export class Contacts {
     const response = await this.remark.patch<ContactFields>(`/contacts`, {
       email: options.email,
       name: options.name,
+      metadata: options.metadata,
     });
 
     if (response.error) {

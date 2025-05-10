@@ -9,6 +9,14 @@ export interface FeedbackFields {
    * @required
    */
   text: string;
+  /**
+   * Additional metadata for the feedback.
+   * Currently only supports path as a string.
+   * @optional
+   */
+  metadata?: {
+    path?: string;
+  };
 }
 
 export interface CreateFeedbackOptions extends FeedbackFields {}

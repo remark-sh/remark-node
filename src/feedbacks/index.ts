@@ -15,7 +15,10 @@ export class Feedbacks {
    * ```ts
    * const { data: feedback } = await remark.feedbacks.create({
    *   from: "alan@turing.com",
-   *   message: "Great product!"
+   *   text: "Great product!",
+   *   metadata: {
+   *     path: "/page"
+   *   }
    * });
    * ```
    */
@@ -25,6 +28,7 @@ export class Feedbacks {
     const response = await this.remark.post<FeedbackFields>(`/feedbacks`, {
       from: options.from,
       text: options.text,
+      metadata: options.metadata,
     });
 
     if (response.error) {

@@ -25,10 +25,11 @@ Create a contact:
 
 ```ts
 const result = await remark.contacts.create({
-  id: "your_user_id"
-  email: "user@example.com",
   name: "John Doe",
-  subscribed: false,
+  email: "user@example.com",
+  metadata: {
+    tier: "premium",
+  },
 });
 ```
 
@@ -36,16 +37,20 @@ Update a contact:
 
 ```ts
 const result = await remark.contacts.update({
-  id: "contact_id",
-  email: "updated@example.com",
   name: "John Smith",
+  email: "updated@example.com",
+  metadata: {
+    tier: "enterprise",
+  },
 });
 ```
 
 Delete a contact:
 
 ```ts
-const result = await remark.contacts.delete("your_user_id");
+const result = await remark.contacts.delete({
+  email: "user@example.com",
+});
 ```
 
 ### Feedbacks
@@ -56,7 +61,9 @@ Create a feedback:
 const result = await remark.feedbacks.create({
   from: "your_user_id",
   message: "Hello world!",
-  where: "https://example.com/page", // or a path e.g. "/page"
+  metadata: {
+    path: "/page",
+  },
 });
 ```
 
