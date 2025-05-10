@@ -27,8 +27,7 @@ Create a contact:
 const result = await remark.contacts.create({
   id: "your_user_id"
   email: "user@example.com",
-  firstName: "John",
-  lastName: "Doe",
+  name: "John Doe",
   subscribed: false,
 });
 ```
@@ -39,8 +38,7 @@ Update a contact:
 const result = await remark.contacts.update({
   id: "contact_id",
   email: "updated@example.com",
-  firstName: "John",
-  lastName: "Smith",
+  name: "John Smith",
 });
 ```
 

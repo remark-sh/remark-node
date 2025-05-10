@@ -17,16 +17,14 @@ export class Contacts {
    * ```ts
    * const { data: contact } = await remark.contacts.create({
    *   email: "alan@turing.com",
-   *   lastName: "Turing",
-   *   firstName: "Alan",
+   *   name: "Alan Turing"
    * });
    * ```
    */
   async create(options: CreateContactOptions): Promise<ContactResponse> {
     const response = await this.remark.post<ContactFields>(`/contacts`, {
       email: options.email,
-      firstName: options.firstName,
-      lastName: options.lastName,
+      name: options.name,
     });
 
     if (response.error) {
@@ -46,16 +44,14 @@ export class Contacts {
    * ```ts
    * const { data: contact } = await remark.contacts.update({
    *   email: "alan@turing.com",
-   *   lastName: "Turing",
-   *   firstName: "Alan"
+   *   name: "Alan Turing"
    * });
    * ```
    */
   async update(options: UpdateContactOptions): Promise<ContactResponse> {
     const response = await this.remark.patch<ContactFields>(`/contacts`, {
       email: options.email,
-      firstName: options.firstName,
-      lastName: options.lastName,
+      name: options.name,
     });
 
     if (response.error) {

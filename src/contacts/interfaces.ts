@@ -5,15 +5,10 @@ export interface ContactFields {
    */
   email: string;
   /**
-   * The first name of the contact.
+   * The full name of the contact.
    * @optional
    */
-  firstName?: string;
-  /**
-   * The last name of the contact.
-   * @optional
-   */
-  lastName?: string;
+  name?: string;
 }
 
 export interface CreateContactOptions extends ContactFields { }
