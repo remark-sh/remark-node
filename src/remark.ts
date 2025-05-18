@@ -3,9 +3,7 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const baseUrl = process.env.NODE_ENV === "development" 
-  ? "http://localhost:3000/api" 
-  : "https://remark.sh/api";
+const BASE_URL = "https://remark.sh/api";
 
 /**
  * The main Remark SDK class. Initialize with your API key to start making requests.
@@ -23,6 +21,7 @@ export class Remark {
 
   /**
    * Creates a new instance of the Remark SDK.
+   * @param key - Your Remark API key
    * @throws {Error} If no API key is provided
    */
   constructor(readonly key: string) {
@@ -44,7 +43,7 @@ export class Remark {
    */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
     const { data: response, error: fetchError } = await tryCatch(
-      fetch(`${baseUrl}${path}`, options)
+      fetch(`${BASE_URL}${path}`, options)
     );
 
     if (fetchError || !response) {
