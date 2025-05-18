@@ -3,7 +3,9 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const baseUrl = "http://localhost:3000/api"; // Good for now we test locally
+const baseUrl = process.env.NODE_ENV === "development" 
+  ? "http://localhost:3000/api" 
+  : "https://remark.sh/api";
 
 /**
  * The main Remark SDK class. Initialize with your API key to start making requests.
