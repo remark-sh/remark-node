@@ -3,7 +3,7 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const BASE_URL = "https://remark.sh/api";
+const BASE_URL = "http://localhost:3000/api";
 
 /**
  * The main Remark SDK class. Initialize with your API key to start making requests.
