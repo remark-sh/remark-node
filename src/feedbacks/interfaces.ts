@@ -15,7 +15,10 @@ export interface FeedbackFields {
    * @optional
    */
   metadata?: {
+    os?: string;
     path?: string;
+    device?: string;
+    browser?: string;
   };
 }
 

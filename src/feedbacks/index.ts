@@ -17,7 +17,10 @@ export class Feedbacks {
    *   from: "alan@turing.com",
    *   text: "Great product!",
    *   metadata: {
+   *     os: "macOS"
    *     path: "/page"
+   *     device: "undefined"
+   *     browser: "Google Chrome"
    *   }
    * });
    * ```
