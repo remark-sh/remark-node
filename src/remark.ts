@@ -85,28 +85,13 @@ export class Remark {
       };
     }
 
-    // Try to parse backend error as JSON
-    let backendErrorMsg = errorText;
-    let errorName = "server_error";
-
-    try {
-      const parsed = JSON.parse(errorText);
-      if (parsed && typeof parsed.error === "string") {
-        backendErrorMsg = parsed.error;
-      }
-      // Use the error code from the backend if available
-      if (parsed && parsed.code) {
-        errorName = parsed.code.toLowerCase();
-      }
-    } catch {
-      // Not JSON, use raw text
-    }
-
+    // Parse backend error
+    const parsed = JSON.parse(errorText);
     return {
       data: null,
       error: {
-        name: errorName,
-        message: backendErrorMsg,
+        name: parsed.code.toLowerCase(),
+        message: parsed.error,
       },
     };
   }
