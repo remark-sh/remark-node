@@ -42,10 +42,10 @@ export class Remark {
    * @throws {Error} If the API request fails
    */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
+    // Network error
     const { data: response, error: fetchError } = await tryCatch(
       fetch(`${BASE_URL}${path}`, options)
     );
-
     if (fetchError || !response) {
       return {
         data: null,
@@ -56,11 +56,11 @@ export class Remark {
       };
     }
 
+    // Success
     if (response.ok) {
       const { data, error: parseError } = await tryCatch<T>(
         response.json() as Promise<T>
       );
-
       if (parseError) {
         return {
           data: null,
@@ -73,9 +73,8 @@ export class Remark {
       return { data, error: null };
     }
 
-    const { data: errorText, error: textError } = await tryCatch(
-      response.text()
-    );
+    // Error response
+    const { data: errorText, error: textError } = await tryCatch(response.text());
     if (textError || !errorText) {
       return {
         data: null,
@@ -86,22 +85,24 @@ export class Remark {
       };
     }
 
-    const { data: parsedError, error: parseError } = await tryCatch(
-      Promise.resolve(JSON.parse(errorText))
-    );
-
-    if (parseError || !parsedError) {
-      return {
-        data: null,
-        error: {
-          name: "application_error",
-          message:
-            "Internal server error. We are unable to process your request right now, please try again later.",
-        },
-      };
+    // Try to parse backend error as JSON
+    let backendErrorMsg = errorText;
+    try {
+      const parsed = JSON.parse(errorText);
+      if (parsed && typeof parsed.error === "string") {
+        backendErrorMsg = parsed.error;
+      }
+    } catch {
+      // Not JSON, use raw text
     }
 
-    return { data: null, error: parsedError };
+    return {
+      data: null,
+      error: {
+        name: "api_error",
+        message: backendErrorMsg,
+      },
+    };
   }
 
   /**

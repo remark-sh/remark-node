@@ -28,19 +28,10 @@ export class Feedbacks {
   async create(
     options: CreateFeedbackOptions
   ): Promise<CreateFeedbackResponse> {
-    const response = await this.remark.post<FeedbackFields>(`/feedbacks`, {
+    return this.remark.post<FeedbackFields>(`/feedbacks`, {
       from: options.from,
       text: options.text,
       metadata: options.metadata,
     });
-
-    if (response.error) {
-      throw new Error(response.error.message);
-    }
-
-    return {
-      data: response.data,
-      error: null,
-    };
   }
 }
