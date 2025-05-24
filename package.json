@@ -1,6 +1,6 @@
 {
   "name": "@remark-sh/sdk-dev",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Node.js library for the Remark API",
   "publishConfig": {
     "access": "public"

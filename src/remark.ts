@@ -50,7 +50,7 @@ export class Remark {
       return {
         data: null,
         error: {
-          name: "application_error",
+          name: "network_error",
           message: "Unable to fetch data. The request could not be resolved.",
         },
       };
@@ -65,7 +65,7 @@ export class Remark {
         return {
           data: null,
           error: {
-            name: "application_error",
+            name: "parse_error",
             message: "Failed to parse response data",
           },
         };
@@ -79,7 +79,7 @@ export class Remark {
       return {
         data: null,
         error: {
-          name: "application_error",
+          name: "server_error",
           message: response.statusText,
         },
       };
@@ -87,10 +87,16 @@ export class Remark {
 
     // Try to parse backend error as JSON
     let backendErrorMsg = errorText;
+    let errorName = "server_error";
+
     try {
       const parsed = JSON.parse(errorText);
       if (parsed && typeof parsed.error === "string") {
         backendErrorMsg = parsed.error;
+      }
+      // Use the error code from the backend if available
+      if (parsed && parsed.code) {
+        errorName = parsed.code.toLowerCase();
       }
     } catch {
       // Not JSON, use raw text
@@ -99,7 +105,7 @@ export class Remark {
     return {
       data: null,
       error: {
-        name: "api_error",
+        name: errorName,
         message: backendErrorMsg,
       },
     };
