@@ -3,7 +3,7 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const BASE_URL = "https://remark.sh/api";
+const BASE_URL = "http://localhost:3000/api";
 
 /**
  * The main Remark SDK class. Initialize with your API key to start making requests.
@@ -42,30 +42,30 @@ export class Remark {
    * @throws {Error} If the API request fails
    */
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
+    // Network error
     const { data: response, error: fetchError } = await tryCatch(
       fetch(`${BASE_URL}${path}`, options)
     );
-
     if (fetchError || !response) {
       return {
         data: null,
         error: {
-          name: "application_error",
+          name: "network_error",
           message: "Unable to fetch data. The request could not be resolved.",
         },
       };
     }
 
+    // Success
     if (response.ok) {
       const { data, error: parseError } = await tryCatch<T>(
         response.json() as Promise<T>
       );
-
       if (parseError) {
         return {
           data: null,
           error: {
-            name: "application_error",
+            name: "parse_error",
             message: "Failed to parse response data",
           },
         };
@@ -73,35 +73,27 @@ export class Remark {
       return { data, error: null };
     }
 
-    const { data: errorText, error: textError } = await tryCatch(
-      response.text()
-    );
+    // Error response
+    const { data: errorText, error: textError } = await tryCatch(response.text());
     if (textError || !errorText) {
       return {
         data: null,
         error: {
-          name: "application_error",
+          name: "server_error",
           message: response.statusText,
         },
       };
     }
 
-    const { data: parsedError, error: parseError } = await tryCatch(
-      Promise.resolve(JSON.parse(errorText))
-    );
-
-    if (parseError || !parsedError) {
-      return {
-        data: null,
-        error: {
-          name: "application_error",
-          message:
-            "Internal server error. We are unable to process your request right now, please try again later.",
-        },
-      };
-    }
-
-    return { data: null, error: parsedError };
+    // Parse backend error
+    const parsed = JSON.parse(errorText);
+    return {
+      data: null,
+      error: {
+        name: parsed.code.toLowerCase(),
+        message: parsed.error,
+      },
+    };
   }
 
   /**
