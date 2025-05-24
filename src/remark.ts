@@ -3,7 +3,8 @@ import { ApiResponse, PatchOptions, PostOptions } from "@/common/interfaces";
 import { Contacts } from "@/contacts";
 import { Feedbacks } from "@/feedbacks";
 
-const BASE_URL = "http://localhost:3000/api";
+const PRODUCTION_URL = "https://api.remark.sh/api";
+const DEVELOPMENT_URL = "http://localhost:3000/api";
 
 /**
  * The main Remark SDK class. Initialize with your API key to start making requests.
@@ -15,6 +16,7 @@ const BASE_URL = "http://localhost:3000/api";
  */
 export class Remark {
   private readonly headers: Headers;
+  private readonly baseUrl: string;
 
   readonly contacts = new Contacts(this);
   readonly feedbacks = new Feedbacks(this);
@@ -22,15 +24,21 @@ export class Remark {
   /**
    * Creates a new instance of the Remark SDK.
    * @param key - Your Remark API key
+   * @param options - Configuration options
+   * @param options.mode - The mode to run the SDK in. Defaults to "production"
    * @throws {Error} If no API key is provided
    */
-  constructor(readonly key: string) {
+  constructor(
+    readonly key: string,
+    options: { mode?: "production" | "development" } = {}
+  ) {
     if (!key) {
       throw new Error(
         "Missing API key. Please define it in your .env file as REMARK_API_KEY."
       );
     }
 
+    this.baseUrl = options.mode === "development" ? DEVELOPMENT_URL : PRODUCTION_URL;
     this.headers = new Headers({
       "x-api-key": this.key,
       "Content-Type": "application/json",
@@ -44,7 +52,7 @@ export class Remark {
   async fetchRequest<T>(path: string, options = {}): Promise<ApiResponse<T>> {
     // Network error
     const { data: response, error: fetchError } = await tryCatch(
-      fetch(`${BASE_URL}${path}`, options)
+      fetch(`${this.baseUrl}${path}`, options)
     );
     if (fetchError || !response) {
       return {
